@@ -12,15 +12,17 @@ test('Discounted Mocha added to the Cart after promo accepting', async ({
   const americanoPrice = priceFormatStr(COFFEE_PRICES.americano);
 
   await menuPage.open();
-  await menuPage.clickCoffeeCup(COFFEE_NAMES.cappuccino);
-  await menuPage.clickCoffeeCup(COFFEE_NAMES.espresso);
-  await menuPage.clickCoffeeCup(COFFEE_NAMES.americano);
 
-  await menuPage.assertPromoMessageIsVisible();
+  // Use component-based actions
+  await menuPage.menu.clickCoffeeCup(COFFEE_NAMES.cappuccino);
+  await menuPage.menu.clickCoffeeCup(COFFEE_NAMES.espresso);
+  await menuPage.menu.clickCoffeeCup(COFFEE_NAMES.americano);
 
-  await menuPage.clickYesPromoButton();
+  await menuPage.menu.assertPromoMessageIsVisible();
+  await menuPage.menu.clickYesPromoButton();
 
-  await menuPage.clickCartLink();
+  // Navigate to cart via header component
+  await menuPage.header.clickCartLink();
   await cartPage.waitForLoading();
 
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
