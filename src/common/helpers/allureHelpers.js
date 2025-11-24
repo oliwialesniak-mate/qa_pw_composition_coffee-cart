@@ -11,7 +11,8 @@ export function parseTestTreeHierarchy(fileName, logger) {
     capitalize(camelCaseToPhrase(attribute)),
   );
 
-  if (attributes[2].includes('.spec.js')) {
+  // Only slice if attributes[2] exists and contains '.spec.js'
+  if (attributes[2]?.includes('.spec.js')) {
     attributes = attributes.slice(0, 2);
   }
 
